@@ -1,4 +1,4 @@
-// Task 5
+// Task 6
 // Select the riskDashboard container
 const riskDashboard = document.getElementById("riskDashboard");
 console.log("Risk Dashboard Loaded");
@@ -22,14 +22,20 @@ function addRiskItem(riskName, riskLevel, department) {
         <strong>Department:</strong> ${department} <br>
     `;
 
+    // Prevent clicks inside the card from affecting the dashboard
+    riskCard.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent event bubbling
+    });
+
     // Create a "Resolve" button
     const resolveButton = document.createElement("button");
     resolveButton.textContent = "Resolve";
     resolveButton.classList.add("resolveButton");
 
-    // Add event listener to remove the risk card when clicked
-    resolveButton.addEventListener("click", function () {
-        riskCard.remove();
+    // Ensure clicking the "Resolve" button does not trigger dashboard events
+    resolveButton.addEventListener("click", function (event) {
+        event.stopPropagation(); // Stop bubbling up
+        riskCard.remove(); // Remove only the clicked risk card
     });
 
     // Append button to the risk card
