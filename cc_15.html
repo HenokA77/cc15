@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Assessment Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #riskDashboard {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Risk Assessment Dashboard</h2>
+
+    <form id="riskForm">
+        <label for="riskItem">Risk Item:</label>
+        <input type="text" id="riskItem" name="riskItem" required>
+        <button type="submit">Add Risk</button>
+    </form>
+
+    <h3>Risk Items</h3>
+    <div id="riskDashboard"></div>
+
+    <script>
+        document.getElementById("riskForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let riskItemInput = document.getElementById("riskItem");
+            let riskItemValue = riskItemInput.value.trim();
+
+            if (riskItemValue) {
+                let riskDashboard = document.getElementById("riskDashboard");
+                let newRisk = document.createElement("p");
+                newRisk.textContent = riskItemValue;
+                riskDashboard.appendChild(newRisk);
+                riskItemInput.value = "";
+            }
+        });
+    </script>
+
+</body>
+</html>
