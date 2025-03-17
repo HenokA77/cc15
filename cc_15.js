@@ -1,4 +1,4 @@
-// Task 4 
+// Task 5
 // Select the riskDashboard container
 const riskDashboard = document.getElementById("riskDashboard");
 console.log("Risk Dashboard Loaded");
@@ -9,23 +9,16 @@ function addRiskItem(riskName, riskLevel, department) {
     const riskCard = document.createElement("div");
     riskCard.classList.add("riskCard");
 
+    // Apply a data attribute to store the risk level
+    riskCard.setAttribute("data-risk-level", riskLevel);
+
     // Apply different background colors based on risk level
-    switch (riskLevel) {
-        case "Low":
-            riskCard.style.backgroundColor = "lightgreen";
-            break;
-        case "Medium":
-            riskCard.style.backgroundColor = "yellow";
-            break;
-        case "High":
-            riskCard.style.backgroundColor = "lightcoral";
-            break;
-    }
+    updateRiskCardStyle(riskCard, riskLevel);
 
     // Set inner HTML to display risk details
     riskCard.innerHTML = `
         <strong>Risk Name:</strong> ${riskName} <br>
-        <strong>Risk Level:</strong> ${riskLevel} <br>
+        <strong>Risk Level:</strong> <span class="riskLevel">${riskLevel}</span> <br>
         <strong>Department:</strong> ${department} <br>
     `;
 
@@ -44,6 +37,21 @@ function addRiskItem(riskName, riskLevel, department) {
 
     // Append the new risk card to the dashboard
     riskDashboard.appendChild(riskCard);
+}
+
+// Function to update risk card style based on level
+function updateRiskCardStyle(card, level) {
+    // Remove existing risk level classes
+    card.classList.remove("lowRisk", "mediumRisk", "highRisk");
+
+    // Apply new background color
+    if (level === "Low") {
+        card.classList.add("lowRisk");
+    } else if (level === "Medium") {
+        card.classList.add("mediumRisk");
+    } else if (level === "High") {
+        card.classList.add("highRisk");
+    }
 }
 
 // Event listener for the form submission
@@ -66,6 +74,35 @@ document.getElementById("riskForm").addEventListener("submit", function(event) {
     }
 });
 
-// Test Cases
-addRiskItem("Cybersecurity Threat", "High", "IT");
-addRiskItem("HR Compliance Issue", "Low", "Human Resources");
+// Function to increase all risk levels
+function increaseRiskLevels() {
+    const riskCards = document.querySelectorAll(".riskCard");
+
+    riskCards.forEach(card => {
+        let currentLevel = card.getAttribute("data-risk-level");
+        let newLevel;
+
+        if (currentLevel === "Low") {
+            newLevel = "Medium";
+        } else if (currentLevel === "Medium") {
+            newLevel = "High";
+        } else {
+            newLevel = "High"; // High remains unchanged
+        }
+
+        // Update the data attribute
+        card.setAttribute("data-risk-level", newLevel);
+
+        // Update the displayed text
+        card.querySelector(".riskLevel").textContent = newLevel;
+
+        // Update the background color
+        updateRiskCardStyle(card, newLevel);
+    });
+}
+
+// Event listener for the "Increase Risk Levels" button
+document.getElementById("increaseRiskButton").addEventListener("click", increaseRiskLevels);
+
+// Test Case
+addRiskItem("Employee Retention", "Low", "HR");
