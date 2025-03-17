@@ -1,4 +1,4 @@
-// Task 3
+// Task 4 
 // Select the riskDashboard container
 const riskDashboard = document.getElementById("riskDashboard");
 console.log("Risk Dashboard Loaded");
@@ -8,6 +8,19 @@ function addRiskItem(riskName, riskLevel, department) {
     // Create a new div element for the risk card
     const riskCard = document.createElement("div");
     riskCard.classList.add("riskCard");
+
+    // Apply different background colors based on risk level
+    switch (riskLevel) {
+        case "Low":
+            riskCard.style.backgroundColor = "lightgreen";
+            break;
+        case "Medium":
+            riskCard.style.backgroundColor = "yellow";
+            break;
+        case "High":
+            riskCard.style.backgroundColor = "lightcoral";
+            break;
+    }
 
     // Set inner HTML to display risk details
     riskCard.innerHTML = `
@@ -53,5 +66,6 @@ document.getElementById("riskForm").addEventListener("submit", function(event) {
     }
 });
 
-// Test Case: Adding a sample risk
-addRiskItem("Market Fluctuations", "High", "Finance");
+// Test Cases
+addRiskItem("Cybersecurity Threat", "High", "IT");
+addRiskItem("HR Compliance Issue", "Low", "Human Resources");
